@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <script type="text/javascript">
+    var Dragon = {
+      hp: 2000,      
+      defense: 120, 
+      strength: 200, 
+      weapon: 0,
+      hit: function(victim){
+        if (command === 3) {
+          var damage = this.strength + this.weapon - victim.defense - victim.shield;
+          if (damage > 0) {
+            victim.hp -= damage;
+          }
+        } else {
+          var damage = this.strength + this.weapon - victim.defense;
+          if (damage > 0) {
+            victim.hp -= damage;
+          }
+        }
+        return victim.hp;
+      }
+    }
+
+    var Hero = {
+      hp: 1000,
+      defense: 100,
+      strength: 120,
+      weapon: 250,
+      shield: 100,
+      hit: function(victim){
+        var damage = this.strength + this.weapon - victim.defense;
+        if (damage > 0) {
+          victim.hp -= damage;
+        }
+        return victim.hp;
+      }
+    };
+    
+    var getRandom = function(min, max) {
+      return Math.round(Math.random() * (max - min) + min);
+    };
+
+    console.log("Hero's start hp:" + Hero.hp);
+    console.log("Dragons's start hp:" + Dragon.hp);
+    while (Dragon.hp > 0 && Hero.hp > 0) {
+      var command = prompt("Choose action. Press:" + "\n" + "1 - hit" + "\n" + "2 - don't do any action" + "\n" + "3 - defend");
+      command = parseInt(command);
+      if (command === 1) {
+        var roll = getRandom(1, 4);
+        if (roll === 1) {
+          console.log("Hero missed");
+        } else {
+          console.log("Hero hits Dragon");
+          Hero.hit(Dragon);
+          if (Dragon.hp > 0) {
+            console.log(Dragon.hp  + " Dragons's hp left");
+          } else {
+            console.log("Hero won");
+            break;
+          }
+        }
+      } else if (command === 2) {
+        console.log("Hero on freeze");
+      }
+
+
+      roll = getRandom(1, 2);
+      if (roll === 1) {
+        console.log("Dragon sleeps");
+      } else {
+        console.log("Dragon hits hero");
+        Dragon.hit(Hero);
+        if (Hero.hp > 0) {
+          console.log(Hero.hp  + " Hero's hp left");
+        } else {
+          console.log("Dragon won");
+          break;
+        }
+      }
+    }
+
+    
+
+
+  </script>
+</body>
+</html>
